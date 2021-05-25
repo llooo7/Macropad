@@ -30,24 +30,34 @@ button4.update();
 
 // Buttons
 if (button0.fallingEdge()) {
-  Keyboard.press(KEY_MEDIA_PLAY_PAUSE);
-  Keyboard.release(KEY_MEDIA_PLAY_PAUSE);
-  }
-if (button1.fallingEdge()) {
   Keyboard.press(KEY_MEDIA_NEXT_TRACK);
   Keyboard.release(KEY_MEDIA_NEXT_TRACK);
+  }
+if (button1.fallingEdge()) {
+  Keyboard.press(KEY_MEDIA_PLAY_PAUSE);
+  Keyboard.release(KEY_MEDIA_PLAY_PAUSE);
 }
 if (button2.fallingEdge()) {
-  Keyboard.press(KEY_MEDIA_VOLUME_INC );
-  Keyboard.release(KEY_MEDIA_VOLUME_INC );
+  Keyboard.press(KEY_MEDIA_PREV_TRACK);
+  Keyboard.release(KEY_MEDIA_PREV_TRACK);
 }
 if (button3.fallingEdge()) {
-  Keyboard.press(KEY_MEDIA_VOLUME_DEC);
-  Keyboard.release(KEY_MEDIA_VOLUME_DEC);
+  // press and hold CTRL
+  Keyboard.set_modifier(MODIFIERKEY_GUI);
+  Keyboard.send_now();
+  
+  // press DELETE, while CLTR and ALT still held
+  Keyboard.set_key1(KEY_4);
+  Keyboard.send_now();
+  
+  // release all the keys at the same instant
+  Keyboard.set_modifier(0);
+  Keyboard.set_key1(0);
+  Keyboard.send_now();
 }
 if (button4.fallingEdge()) {
-  Keyboard.press(KEY_SYSTEM_WAKE_UP);
-  Keyboard.release(KEY_SYSTEM_WAKE_UP);
+  Keyboard.press(KEY_MEDIA_MUTE);
+  Keyboard.release(KEY_MEDIA_MUTE);
 }
 
 // Knob
