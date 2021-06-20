@@ -5,7 +5,8 @@
 int val = 0;
 int previousval = 0;
 int val2 = 0;
-
+bool counting = false;
+int count = 0;
 Bounce button0 = Bounce(0, 10);
 Bounce button1 = Bounce(1, 10);
 Bounce button2 = Bounce(2, 10);
@@ -42,15 +43,12 @@ if (button2.fallingEdge()) {
   Keyboard.release(KEY_MEDIA_PREV_TRACK);
 }
 if (button3.fallingEdge()) {
-  // press and hold CTRL
   Keyboard.set_modifier(MODIFIERKEY_GUI);
   Keyboard.send_now();
   
-  // press DELETE, while CLTR and ALT still held
   Keyboard.set_key1(KEY_4);
   Keyboard.send_now();
   
-  // release all the keys at the same instant
   Keyboard.set_modifier(0);
   Keyboard.set_key1(0);
   Keyboard.send_now();
@@ -58,6 +56,12 @@ if (button3.fallingEdge()) {
 if (button4.fallingEdge()) {
   Keyboard.press(KEY_MEDIA_MUTE);
   Keyboard.release(KEY_MEDIA_MUTE);
+  counting = true;
+  }
+
+if (button4.risingEdge()) {
+  counting = false;
+  count = 0;
 }
 
 // Knob
@@ -82,4 +86,22 @@ val = analogRead(20);                      //read potentiometer value
       delay(2);
     }
   }
+
+if (counting==true)
+{
+  count++;
+  if(count > 2000)
+  {
+    Keyboard.set_modifier(MODIFIERKEY_GUI);
+    Keyboard.send_now();
+    
+    Keyboard.set_key1(KEY_L);
+    Keyboard.send_now();
+    
+    Keyboard.set_modifier(0);
+    Keyboard.set_key1(0);
+    Keyboard.send_now();
+  }
+}
+
 }
