@@ -7,6 +7,7 @@ int previousval = 0;
 int val2 = 0;
 bool counting = false;
 int count = 0;
+int longpress = 2000;
 Bounce button0 = Bounce(0, 10);
 Bounce button1 = Bounce(1, 10);
 Bounce button2 = Bounce(2, 10);
@@ -54,13 +55,21 @@ if (button3.fallingEdge()) {
   Keyboard.send_now();
 }
 if (button4.fallingEdge()) {
-  Keyboard.press(KEY_MEDIA_MUTE);
-  Keyboard.release(KEY_MEDIA_MUTE);
+ // Keyboard.press(KEY_MEDIA_MUTE);
+ // Keyboard.release(KEY_MEDIA_MUTE);
   counting = true;
   }
 
 if (button4.risingEdge()) {
   counting = false;
+  if (count < longpress) {
+    Keyboard.press(KEY_MEDIA_MUTE);
+    Keyboard.release(KEY_MEDIA_MUTE);
+  }
+  else
+  {
+    
+  }
   count = 0;
 }
 
@@ -90,7 +99,7 @@ val = analogRead(20);                      //read potentiometer value
 if (counting==true)
 {
   count++;
-  if(count > 2000)
+  if(count > longpress)
   {
     Keyboard.set_modifier(MODIFIERKEY_GUI);
     Keyboard.send_now();
