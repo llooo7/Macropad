@@ -5,37 +5,14 @@
 int val = 0;
 int previousval = 0;
 int val2 = 0;
+bool counting = false;
+int count = 0;
+int longpress = 2000;
 Bounce button0 = Bounce(0, 10);
 Bounce button1 = Bounce(1, 10);
 Bounce button2 = Bounce(2, 10);
 Bounce button3 = Bounce(3, 10);
 Bounce button4 = Bounce(4, 10);
-
-typedef enum  {
-  KEY_MEDIA_NEXT_TRACK,
-  KEY_MEDIA_PLAY_PAUSE,
-  KEY_MEDIA_PREV_TRACK,
-  MODIFIERKEY_GUI,
-  KEY_4,
-  KEY_L,
-} functions ;
-
-typedef struct  {
-  bool counting = false;
-  int count = 0;
-  int longpress = 2000;
-} multiFunKey;
-
-multiFunKey button_4;
-multiFunKey button_3;
-multiFunKey button_1;
-
-void regPress(functions key)  {
-  Keyboard.press(key);
-  Keyboard.release(key);
-}
-
-void modPress()
 
 void setup() {
 pinMode(0, INPUT_PULLUP);
@@ -54,15 +31,18 @@ button3.update();
 button4.update();
 
 // Buttons
-if (button0.fallingEdge()) 
-  regPress(0);
-
-if (button1.fallingEdge())
-  regPress(1);
-
-if (button2.fallingEdge())
-  regPress(2);
-
+if (button0.fallingEdge()) {
+  Keyboard.press(KEY_MEDIA_NEXT_TRACK);
+  Keyboard.release(KEY_MEDIA_NEXT_TRACK);
+  }
+if (button1.fallingEdge()) {
+  Keyboard.press(KEY_MEDIA_PLAY_PAUSE);
+  Keyboard.release(KEY_MEDIA_PLAY_PAUSE);
+}
+if (button2.fallingEdge()) {
+  Keyboard.press(KEY_MEDIA_PREV_TRACK);
+  Keyboard.release(KEY_MEDIA_PREV_TRACK);
+}
 if (button3.fallingEdge()) {
   Keyboard.set_modifier(MODIFIERKEY_GUI);
   Keyboard.send_now();
@@ -77,12 +57,12 @@ if (button3.fallingEdge()) {
 if (button4.fallingEdge()) {
  // Keyboard.press(KEY_MEDIA_MUTE);
  // Keyboard.release(KEY_MEDIA_MUTE);
-  button4.counting = true;
+  counting = true;
   }
 
 if (button4.risingEdge()) {
-  button4.counting = false;
-  if (button4.count < longpress) {
+  counting = false;
+  if (count < longpress) {
     Keyboard.press(KEY_MEDIA_MUTE);
     Keyboard.release(KEY_MEDIA_MUTE);
   }
@@ -90,24 +70,7 @@ if (button4.risingEdge()) {
   {
     
   }
-  button4.count = 0;
-}
-
-if (button4.counting==true)
-{
-  button_4.count++;
-  if(button4.count > longpress)
-  {
-    Keyboard.set_modifier(MODIFIERKEY_GUI);
-    Keyboard.send_now();
-    
-    Keyboard.set_key1(KEY_L);
-    Keyboard.send_now();
-    
-    Keyboard.set_modifier(0);
-    Keyboard.set_key1(0);
-    Keyboard.send_now();
-  }
+  count = 0;
 }
 
 // Knob
@@ -132,5 +95,22 @@ val = analogRead(20);                      //read potentiometer value
       delay(2);
     }
   }
+
+if (counting==true)
+{
+  count++;
+  if(count > longpress)
+  {
+    Keyboard.set_modifier(MODIFIERKEY_GUI);
+    Keyboard.send_now();
+    
+    Keyboard.set_key1(KEY_L);
+    Keyboard.send_now();
+    
+    Keyboard.set_modifier(0);
+    Keyboard.set_key1(0);
+    Keyboard.send_now();
+  }
+}
 
 }
