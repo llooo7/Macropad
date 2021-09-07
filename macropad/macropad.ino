@@ -11,14 +11,16 @@ Bounce button2 = Bounce(2, 10);
 Bounce button3 = Bounce(3, 10);
 Bounce button4 = Bounce(4, 10);
 
+/*
 typedef enum  {
-  KEY_MEDIA_NEXT_TRACK,
-  KEY_MEDIA_PLAY_PAUSE,
-  KEY_MEDIA_PREV_TRACK,
-  MODIFIERKEY_GUI,
-  KEY_4,
-  KEY_L,
+  KEY_MEDIA_NEXT_TRACK = 0,
+  KEY_MEDIA_PLAY_PAUSE = 1,
+  KEY_MEDIA_PREV_TRACK = 2,
+  MODIFIERKEY_GUI = 3,
+  KEY_4 = 4 ,
+  KEY_L = 5,
 } functions ;
+*/
 
 typedef struct  {
   bool counting = false;
@@ -34,6 +36,8 @@ void regPress(functions key)  {
   Keyboard.press(key);
   Keyboard.release(key);
 }
+
+void modPress(functions)
 
 void modPress()
 
@@ -55,13 +59,13 @@ button4.update();
 
 // Buttons
 if (button0.fallingEdge()) 
-  regPress(0);
+  regPress(KEY_MEDIA_NEXT_TRACK);
 
 if (button1.fallingEdge())
-  regPress(1);
+  regPress(KEY_MEDIA_PLAY_PAUSE);
 
 if (button2.fallingEdge())
-  regPress(2);
+  regPress(KEY_MEDIA_PREV_TRACK);
 
 if (button3.fallingEdge()) {
   Keyboard.set_modifier(MODIFIERKEY_GUI);
@@ -74,22 +78,18 @@ if (button3.fallingEdge()) {
   Keyboard.set_key1(0);
   Keyboard.send_now();
 }
+
 if (button4.fallingEdge()) {
  // Keyboard.press(KEY_MEDIA_MUTE);
  // Keyboard.release(KEY_MEDIA_MUTE);
   button4.counting = true;
-  }
+}
 
 if (button4.risingEdge()) {
   button4.counting = false;
   if (button4.count < longpress) {
     Keyboard.press(KEY_MEDIA_MUTE);
     Keyboard.release(KEY_MEDIA_MUTE);
-  }
-  else
-  {
-    
-  }
   button4.count = 0;
 }
 
