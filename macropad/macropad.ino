@@ -32,7 +32,7 @@ multiFunKey button_4;
 multiFunKey button_3;
 multiFunKey button_1;
 
-void regPress(functions key)  {
+void regPress(auto key)  {
   Keyboard.press(key);
   Keyboard.release(key);
 }

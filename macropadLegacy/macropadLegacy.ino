@@ -57,23 +57,23 @@ if (button2.fallingEdge()) {
 
 //BUTTON 1 starts here
 
-if (button3.fallingEdge()) {
-  multiButton3.counting = true;
+if (button1.fallingEdge()) {
+  multiButton1.counting = true;
   }
 
-if (button3.risingEdge()) {
-  multiButton3.counting = false;
-  if (multiButton3.count < longpress) {
+if (button1.risingEdge()) {
+  multiButton1.counting = false;
+  if (multiButton1.count < longpress) {
     Keyboard.press(KEY_MEDIA_PLAY_PAUSE);
     Keyboard.release(KEY_MEDIA_PLAY_PAUSE);
   }
-  multiButton3.count = 0;
+  multiButton1.count = 0;
 }
 
-if (multiButton3.counting==true)
+if (multiButton1.counting==true)
 {
-  multiButton3.count++;
-  if(multiButton3.count > longpress)
+  multiButton1.count++;
+  if(multiButton1.count > longpress)
   {
     Keyboard.set_modifier(MODIFIERKEY_GUI | MODIFIERKEY_SHIFT);
     Keyboard.send_now();
@@ -114,7 +114,7 @@ if (multiButton3.counting==true)
   multiButton3.count++;
   if(multiButton3.count > longpress)
   {
-    Keyboard.set_modifier(MODIFIERKEY_GUI | MODIFIERKEY_SHIFT);
+    Keyboard.set_modifier(MODIFIERKEY_SHIFT | MODIFIERKEY_GUI);
     Keyboard.send_now();
     
     Keyboard.set_key1(KEY_L);
